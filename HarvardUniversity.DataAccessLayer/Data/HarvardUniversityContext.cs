@@ -2,6 +2,7 @@
 using HarvardUniversity.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Azure.Identity;
 
 
 namespace HarvardUniversity.DataAccessLayer.Data
@@ -32,9 +33,10 @@ namespace HarvardUniversity.DataAccessLayer.Data
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(@Directory.GetCurrentDirectory() + "/../HarvardUniversity.API/appsettings.json")
+                .AddAzureKeyVault(new Uri("https://HarvardUniversityKV.vault.azure.net/"), new DefaultAzureCredential())
                 .Build();
             var builder = new DbContextOptionsBuilder<HarvardUniversityContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString = configuration["DefaultConnection"];
             builder.UseSqlServer(connectionString);
             return new HarvardUniversityContext(builder.Options);
         }
