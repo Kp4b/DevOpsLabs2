@@ -3,6 +3,7 @@ using HarvardUniversity.DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Azure.Identity;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 
 namespace HarvardUniversity.DataAccessLayer.Data
@@ -24,6 +25,11 @@ namespace HarvardUniversity.DataAccessLayer.Data
             modelBuilder.ApplyConfiguration(new Configurations.GroupConfiguration());
             modelBuilder.ApplyConfiguration(new Configurations.StudentConfiguration());
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+        }
     }
 
     public class HarvardUniversityContextFactory : IDesignTimeDbContextFactory<HarvardUniversityContext>
@@ -33,7 +39,7 @@ namespace HarvardUniversity.DataAccessLayer.Data
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(@Directory.GetCurrentDirectory() + "/../HarvardUniversity.API/appsettings.json")
-                .AddAzureKeyVault(new Uri("https://HarvardUniversityKV.vault.azure.net/"), new DefaultAzureCredential())
+                .AddAzureKeyVault(new Uri("https://harvarduniversitykv.vault.azure.net/"), new DefaultAzureCredential())
                 .Build();
             var builder = new DbContextOptionsBuilder<HarvardUniversityContext>();
             var connectionString = configuration["DefaultConnection"];

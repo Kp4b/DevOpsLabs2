@@ -11,8 +11,25 @@ using Newtonsoft.Json;
 using NLog;
 using System.ComponentModel;
 using System.Reflection;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var vaultUriString = Environment.GetEnvironmentVariable("VaultUri");
+if (string.IsNullOrEmpty(vaultUriString))
+{
+    Console.WriteLine("The VaultUri environment variable is not set.");
+    throw new ArgumentNullException("VaultUri", "The VaultUri environment variable is not set.");
+}
+else
+{
+    Console.WriteLine($"VaultUri: {vaultUriString}");
+}
+
+var keyVaultEndpoint = new Uri(vaultUriString);
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
+
+
 
 // Add services to the container.
 
