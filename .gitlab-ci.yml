@@ -1,0 +1,38 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOTNET_VERSION: "8.0"
+
+before_script:
+  - apt-get update && apt-get install -y wget
+  - wget https://dot.net/v1/dotnet-install.sh
+  - chmod +x ./dotnet-install.sh
+  - ./dotnet-install.sh --version $DOTNET_VERSION
+  - export PATH="$PATH:$HOME/.dotnet"
+  - dotnet --version
+
+build:
+  stage: build
+  script:
+    - dotnet restore
+    - dotnet build --configuration Release
+
+test:
+  stage: test
+  script:
+    - dotnet test --configuration Release
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to Azure Web App..."
+    - wget https://aka.ms/InstallAzureCLIDeb | bash
+    - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+    - az account set --subscription $AZURE_SUBSCRIPTION_ID
+    - dotnet publish -c Release -o publish
+    - az webapp deploy --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_WEBAPP_NAME --src-path ./publish
+  only:
+    - main
