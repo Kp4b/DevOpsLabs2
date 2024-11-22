@@ -4,7 +4,7 @@ stages:
   - deploy
 
 variables:
-  DOTNET_VERSION: "8.0"
+  DOTNET_VERSION: "8.0.11"
 
 before_script:
   - apt-get update && apt-get install -y wget
