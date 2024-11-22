@@ -3,14 +3,11 @@ stages:
   - test
   - deploy
 
-variables:
-  DOTNET_VERSION: "8.0.11"
-
 before_script:
   - apt-get update && apt-get install -y wget
   - wget https://dot.net/v1/dotnet-install.sh
   - chmod +x ./dotnet-install.sh
-  - ./dotnet-install.sh --version $DOTNET_VERSION
+  - ./dotnet-install.sh --channel 8.0
   - export PATH="$PATH:$HOME/.dotnet"
   - dotnet --version
 
