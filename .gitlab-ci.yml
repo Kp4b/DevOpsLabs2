@@ -34,6 +34,7 @@ deploy:
     - wget https://aka.ms/InstallAzureCLIDeb | bash
     - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
     - az account set --subscription $AZURE_SUBSCRIPTION_ID
+    - az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan $AZURE_APP_SERVICE_PLAN --name $AZURE_WEBAPP_NAME --runtime "DOTNET|8.0"
     - cd HarvardUniversity.API
     - dotnet publish -c Release -o ../publish
     - cd ../publish
