@@ -14,12 +14,14 @@ before_script:
 build:
   stage: build
   script:
+    - cd HarvardUniversity.API  
     - dotnet restore
     - dotnet build --configuration Release
 
 test:
   stage: test
   script:
+    - cd HarvardUniversity.API  
     - dotnet test --configuration Release
 
 deploy:
