@@ -35,7 +35,10 @@ deploy:
     - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
     - az account set --subscription $AZURE_SUBSCRIPTION_ID
     - cd HarvardUniversity.API
-    - dotnet publish -c Release -o publish
+    - dotnet publish -c Release -o ../publish
+    - cd ../publish
+    - zip -r ../publish.zip .
+    - cd ..
     - az webapp deploy --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_WEBAPP_NAME --src-path ./publish
   only:
     - main
