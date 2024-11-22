@@ -41,4 +41,4 @@ deploy:
     - cd ..
     - az webapp up --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_WEBAPP_NAME --sku F1 --location "East US 2" --src-path ./publish.zip
   only:
-    - mainn
+    - main
