@@ -10,6 +10,9 @@ before_script:
   - ./dotnet-install.sh --channel 8.0
   - export PATH="$PATH:$HOME/.dotnet"
   - dotnet --version
+  - curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+  - export PATH="$PATH:/usr/bin/az"
+  - az --version
 
 build:
   stage: build
