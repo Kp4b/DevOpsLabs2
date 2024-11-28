@@ -7,7 +7,7 @@ before_script:
   - apt-get update && apt-get install -y wget zip
   - wget https://dot.net/v1/dotnet-install.sh
   - chmod +x ./dotnet-install.sh
-  - ./dotnet-install.sh --channel 8.0
+  - ./dotnet-install.sh --channel 9.0
   - export PATH="$PATH:$HOME/.dotnet"
   - dotnet --version
   - curl -sL https://aka.ms/InstallAzureCLIDeb | bash
@@ -34,9 +34,9 @@ deploy:
     - wget https://aka.ms/InstallAzureCLIDeb | bash
     - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
     - az account set --subscription $AZURE_SUBSCRIPTION_ID
-    - az webapp delete --name $AZURE_WEBAPP_NAME --resource-group $AZURE_RESOURCE_GROUP --keep-empty-plan
+    - az webapp delete --name $AZURE_WEBAPP_NAME --resource-group $AZURE_RESOURCE_GROUP
     - az appservice plan create --name $AZURE_APP_SERVICE_PLAN --resource-group $AZURE_RESOURCE_GROUP --sku F1
-    - az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan $AZURE_APP_SERVICE_PLAN --name $AZURE_WEBAPP_NAME --runtime "dotnet:8"
+    - az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan $AZURE_APP_SERVICE_PLAN --name $AZURE_WEBAPP_NAME --runtime "dotnet:9"
     - cd HarvardUniversity.API
     - dotnet publish -c Release -r win-x64 --self-contained -o ../publish
     - cd ../publish
