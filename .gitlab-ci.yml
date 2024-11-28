@@ -36,7 +36,7 @@ deploy:
     - az account set --subscription $AZURE_SUBSCRIPTION_ID
     - az webapp delete --name $AZURE_WEBAPP_NAME --resource-group $AZURE_RESOURCE_GROUP
     - az appservice plan create --name $AZURE_APP_SERVICE_PLAN --resource-group $AZURE_RESOURCE_GROUP --sku F1
-    - az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan $AZURE_APP_SERVICE_PLAN --name $AZURE_WEBAPP_NAME --runtime "DOTNETCORE|8.0"
+    - az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan $AZURE_APP_SERVICE_PLAN --name $AZURE_WEBAPP_NAME
     - cd HarvardUniversity.API
     - dotnet publish -c Release -r win-x64 --self-contained -o ../publish
     - cd ../publish
