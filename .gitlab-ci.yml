@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 before_script:
   - apt-get update && apt-get install -y wget zip
@@ -14,7 +15,6 @@ build:
   stage: build
   script:
     - cd HarvardUniversity.API  
-    - dotnet clean
     - dotnet restore
     - dotnet build --configuration Release
 
@@ -23,5 +23,16 @@ test:
   script:
     - cd HarvardUniversity.API  
     - dotnet test --configuration Release
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to Azure Web App..."
+    - cd HarvardUniversity.API
+    - dotnet publish -c Release -r win-x64 --self-contained -o ../publish
+    - cd ../publish
+    - zip -r ../publish.zip .
+    - cd ..
+    - curl -X POST -u "$AZURE_WEBAPP_NAME:$AZURE_WEBAPP_PASSWORD" --data-binary @"publish.zip" https://$AZURE_WEBAPP_NAME.scm.azurewebsites.net/api/zipdeploy
   only:
     - main
