@@ -18,7 +18,8 @@ build:
   stage: build
   script:
     - cd HarvardUniversity.API  
-    - dotnet publish -c Release -r win-x64 --self-contained -o ../publish
+    - dotnet restore
+    - dotnet build --configuration Release
 
 test:
   stage: test
@@ -33,9 +34,11 @@ deploy:
     - wget https://aka.ms/InstallAzureCLIDeb | bash
     - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
     - az account set --subscription $AZURE_SUBSCRIPTION_ID
+    - az webapp delete --name $AZURE_WEBAPP_NAME --resource-group $AZURE_RESOURCE_GROUP --yes
     - az appservice plan create --name $AZURE_APP_SERVICE_PLAN --resource-group $AZURE_RESOURCE_GROUP --sku F1
     - az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan $AZURE_APP_SERVICE_PLAN --name $AZURE_WEBAPP_NAME --runtime "dotnet:8"
     - cd HarvardUniversity.API
+    - dotnet publish -c Release -r win-x64 --self-contained -o ../publish
     - cd ../publish
     - zip -r ../publish.zip .
     - cd ..
