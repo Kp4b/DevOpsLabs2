@@ -27,7 +27,7 @@ deploy:
   stage: deploy
   script:
     - echo "Deploying to Azure Web App..."
-    - cd publish
+    - cd ../publish
     - zip -r ../publish.zip .
     - cd ..
     - curl -X POST -u "$AZURE_WEBAPP_NAME:$AZURE_WEBAPP_PASSWORD" --data-binary @"publish.zip" https://$AZURE_WEBAPP_NAME.scm.azurewebsites.net/api/zipdeploy
