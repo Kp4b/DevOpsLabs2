@@ -15,8 +15,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://harvarduniversitykv.vault.azure.net/"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "browser": "edge",
       "dotnetRunMessages": true,

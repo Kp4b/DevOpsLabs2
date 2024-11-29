@@ -15,22 +15,6 @@ using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var vaultUriString = Environment.GetEnvironmentVariable("VaultUri");
-if (string.IsNullOrEmpty(vaultUriString))
-{
-    Console.WriteLine("The VaultUri environment variable is not set.");
-    throw new ArgumentNullException("VaultUri", "The VaultUri environment variable is not set.");
-}
-else
-{
-    Console.WriteLine($"VaultUri: {vaultUriString}");
-}
-
-var keyVaultEndpoint = new Uri(vaultUriString);
-builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
-
-
 // Add services to the container.
 
 //NLog configuring
@@ -91,11 +75,12 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "HarvardUniversity API V1");
+    c.RoutePrefix = "Swagger"; // This makes Swagger UI available at /Swagger
+});
 
 app.UseHttpsRedirection();
 
