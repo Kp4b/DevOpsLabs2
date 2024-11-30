@@ -1,18 +1,14 @@
 stages:
   - build
   - test
-  - deploy
 
 before_script:
-  - apt-get update && apt-get install -y wget zip
+  - apt-get update && apt-get install -y wget
   - wget https://dot.net/v1/dotnet-install.sh
   - chmod +x ./dotnet-install.sh
   - ./dotnet-install.sh --channel 8.0
   - export PATH="$PATH:$HOME/.dotnet"
   - dotnet --version
-  - curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-  - export PATH="$PATH:/usr/bin/az"
-  - az --version
 
 build:
   stage: build
@@ -26,22 +22,3 @@ test:
   script:
     - cd HarvardUniversity.API  
     - dotnet test --configuration Release
-
-deploy:
-  stage: deploy
-  script:
-    - echo "Deploying to Azure Web App..."
-    - wget https://aka.ms/InstallAzureCLIDeb | bash
-    - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
-    - az account set --subscription $AZURE_SUBSCRIPTION_ID
-    - az appservice plan create --name $AZURE_APP_SERVICE_PLAN --resource-group $AZURE_RESOURCE_GROUP --sku F1
-    - az webapp create --resource-group $AZURE_RESOURCE_GROUP --plan $AZURE_APP_SERVICE_PLAN --name $AZURE_WEBAPP_NAME
-    - cd HarvardUniversity.API
-    - dotnet publish -c Release -o ../publish
-    - cd ../publish
-    - zip -r ../publish.zip .
-    - cd ..
-    - az webapp config appsettings set --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_WEBAPP_NAME --settings "ConnectionStrings__DefaultConnection=$AZURE_SQL_CONNECTION_STRING"
-    - az webapp deploy --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_WEBAPP_NAME --src-path ./publish.zip --type zip
-  only:
-    - main
