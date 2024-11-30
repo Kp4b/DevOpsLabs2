@@ -1,14 +1,15 @@
 stages:
   - build
   - test
+  - deploy
 
 before_script:
-  - apt-get update && apt-get install -y wget
+  - apt-get update && apt-get install -y wget zip
   - wget https://dot.net/v1/dotnet-install.sh
   - chmod +x ./dotnet-install.sh
   - ./dotnet-install.sh --channel 8.0
   - export PATH="$PATH:$HOME/.dotnet"
-  - dotnet --version # test
+  - dotnet --version
 
 build:
   stage: build
@@ -22,3 +23,15 @@ test:
   script:
     - cd HarvardUniversity.API  
     - dotnet test --configuration Release
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to Azure Web App..."
+    - cd HarvardUniversity.API
+    - dotnet publish -c Release -o ../publish
+    - cd ../publish
+    - zip -r ../publish.zip .
+    - curl -X POST -u "$HarvardUniversityWebApp:bcrNboFyRTe1ebFnT4xng5pcZ44uoP4BHmgn8MrpNKRekBtAjs9w7m71vuwt" --data-binary @"publish.zip" "https://harvarduniversitywebapp.scm.azurewebsites.net/api/zipdeploy"
+  only:
+    - main
