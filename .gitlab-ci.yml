@@ -8,7 +8,7 @@ before_script:
   - chmod +x ./dotnet-install.sh
   - ./dotnet-install.sh --channel 8.0
   - export PATH="$PATH:$HOME/.dotnet"
-  - dotnet --version
+  - dotnet --version # test
 
 build:
   stage: build
