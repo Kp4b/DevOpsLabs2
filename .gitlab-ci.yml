@@ -35,4 +35,4 @@ deploy:
     - cd ..
     - curl -X POST -u "$HarvardUniversityWebApp:bcrNboFyRTe1ebFnT4xng5pcZ44uoP4BHmgn8MrpNKRekBtAjs9w7m71vuwt" --data-binary @"publish.zip" "https://harvarduniversitywebapp.scm.azurewebsites.net/deploy"
   only:
-    - main
+    - main # Only deploy when pushing to main branch
