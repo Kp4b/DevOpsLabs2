@@ -77,6 +77,13 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Set environment variables
+        run: |
+          echo "AZURE_WEBAPP_NAME=${{ secrets.AZURE_WEBAPP_NAME }}" >> $GITHUB_ENV
+          echo "AZURE_RESOURCE_GROUP=${{ secrets.AZURE_RESOURCE_GROUP }}" >> $GITHUB_ENV
+          echo "APP_SERVICE_PLAN=${{ secrets.APP_SERVICE_PLAN }}" >> $GITHUB_ENV
+          echo "CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}" >> $GITHUB_ENV
+
       - name: Create Web App
         run: |
           az webapp create --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.APP_SERVICE_PLAN }} --runtime "DOTNET|8.0"
