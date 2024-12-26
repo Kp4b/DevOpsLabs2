@@ -90,7 +90,7 @@ jobs:
 
       - name: Configure Web App settings
         run: |
-          az webapp config appsettings set --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_WEBAPP_NAME }} --settings ConnectionStrings__DefaultConnection=${{ secrets.CONNECTION_STRING }}
+          az webapp config appsettings set --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_WEBAPP_NAME }} --settings "ConnectionStrings__DefaultConnection=${{ secrets.CONNECTION_STRING }}"
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
