@@ -86,7 +86,7 @@ jobs:
 
       - name: Create Web App
         run: |
-          az webapp create --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.APP_SERVICE_PLAN }} --runtime "DOTNETCORE|8.0" --deployment-container-image-name mcr.microsoft.com/dotnet/aspnet:8.0
+          az webapp create --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.APP_SERVICE_PLAN }} --runtime "dotnet:8"
 
       - name: Configure Web App settings
         run: |
