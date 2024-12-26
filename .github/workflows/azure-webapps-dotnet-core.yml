@@ -81,7 +81,7 @@ jobs:
         run: |
           echo "AZURE_WEBAPP_NAME=${{ secrets.AZURE_WEBAPP_NAME }}" >> $GITHUB_ENV
           echo "AZURE_RESOURCE_GROUP=${{ secrets.AZURE_RESOURCE_GROUP }}" >> $GITHUB_ENV
-          echo "APP_SERVICE_PLAN=${{ secrets.APP_SERVICE_PLAN }}" >> $GITHUB_ENV
+          echo "APP_SERVICE_PLAN=${{ secrets.AZURE_APP_SERVICE_PLAN }}" >> $GITHUB_ENV
           echo "CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}" >> $GITHUB_ENV
 
       - name: Create Web App
