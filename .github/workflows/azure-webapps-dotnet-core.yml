@@ -20,7 +20,6 @@
 name: Build and deploy ASP.Net Core app to an Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: HarvardUniversityWebApp
   DOTNET_VERSION: '8'
 
 on:
@@ -57,11 +56,6 @@ jobs:
       - name: dotnet publish
         run: dotnet publish HarvardUniversity.API/HarvardUniversity.API.csproj -c Release -o myapp
 
-      - name: Create .well-known/pki-validation directory
-        run: |
-          mkdir -p ./myapp/.well-known/pki-validation
-          echo "Content of B6A196A936CE9F7B46EE6F7BD8EDFE68.txt" > ./myapp/.well-known/pki-validation/B6A196A936CE9F7B46EE6F7BD8EDFE68.txt
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
@@ -78,6 +72,19 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create Web App
+        run: |
+          az webapp create --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.APP_SERVICE_PLAN }} --runtime "DOTNET|8.0"
+
+      - name: Configure Web App settings
+        run: |
+          az webapp config appsettings set --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_WEBAPP_NAME }} --settings ConnectionStrings__DefaultConnection=${{ env.CONNECTION_STRING }}
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
