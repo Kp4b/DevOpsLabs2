@@ -15,6 +15,9 @@
     },
     "layoutRules": {
       "newlineAtEndOfFile": "require"
+    },
+    "rules": {
+      "enabled": false
     }
   }
 }
