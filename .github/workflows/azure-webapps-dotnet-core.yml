@@ -53,8 +53,8 @@ jobs:
       - name: Install dependencies
         run: dotnet restore HarvardUniversity.API/HarvardUniversity.API.csproj
 
-      #- name: Run linters
-       # run: dotnet build HarvardUniversity.API/HarvardUniversity.API.csproj --no-restore /warnaserror
+      - name: Run linters
+        run: dotnet build HarvardUniversity.API/HarvardUniversity.API.csproj --no-restore /warnaserror
 
       - name: Build with dotnet
         run: dotnet build HarvardUniversity.API/HarvardUniversity.API.csproj --configuration Release
