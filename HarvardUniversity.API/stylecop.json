@@ -8,7 +8,7 @@
     },
     "orderingRules": {
       "usingDirectivesPlacement": "outsideNamespace",
-      "systemUsingDirectivesFirst": true
+      "systemUsingDirectivesFirst": false
     },
     "namingRules": {
       "allowedHungarianPrefixes": [ "as", "is" ]
