@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "documentationRules": {
+      "companyName": "Kp4b",
+      "copyrightText": "Copyright (c) 2024 Kp4b. All rights reserved.",
+      "documentExposedElements": true,
+      "documentInternalElements": false
+    },
+    "orderingRules": {
+      "usingDirectivesPlacement": "outsideNamespace",
+      "systemUsingDirectivesFirst": true
+    },
+    "namingRules": {
+      "allowedHungarianPrefixes": [ "as", "is" ]
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "require"
+    }
+  }
+}
