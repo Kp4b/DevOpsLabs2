@@ -22,7 +22,7 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore src/HarvardUniversity.API/HarvardUniversity.API.csproj
 
     - name: Run linters
-      run: dotnet build --no-restore /warnaserror
+      run: dotnet build src/HarvardUniversity.API/HarvardUniversity.API.csproj --no-restore /warnaserror
