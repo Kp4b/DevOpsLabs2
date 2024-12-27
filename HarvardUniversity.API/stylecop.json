@@ -6,15 +6,12 @@
       "documentExposedElements": false,
       "documentInternalElements": false
     },
-    "orderingRules": {
-      "usingDirectivesPlacement": "outsideNamespace",
-      "systemUsingDirectivesFirst": false
-    },
     "namingRules": {
       "allowedHungarianPrefixes": [ "as", "is" ]
     },
-    "layoutRules": {
-      "newlineAtEndOfFile": "require"
+    "orderingRules": {
+      "usingDirectivesPlacement": "outsideNamespace",
+      "systemUsingDirectivesFirst": false
     },
     "rules": {
       "enabled": false

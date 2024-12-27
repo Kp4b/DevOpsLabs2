@@ -13,6 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 	ProjectSection(SolutionItems) = preProject
 		stylecop.json = stylecop.json
 	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		D_5_4Projects ХАИ_4DevOps_4Labs2_4HarvardUniversity_1API_4stylecop_1json__JsonSchema = 
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
